@@ -5,7 +5,7 @@ using LevelGenerator.Entity.Structs;
 
 namespace LevelGenerator
 {
-    internal class MapPreview : MonoBehaviour
+    public class MapPreview : MonoBehaviour
     {
         [SerializeField] private Renderer _textureRender;
         [SerializeField] private MeshFilter _meshFilter;
@@ -24,9 +24,9 @@ namespace LevelGenerator
         
         public bool AutoUpdate => _autoUpdate;
 
-        internal enum DrawMode { NoiseMap, Mesh, FalloffMap };
+        public enum DrawMode { NoiseMap, Mesh, FalloffMap };
 
-        internal void DrawMapInEditor()
+        public void DrawMapInEditor()
         {
             _textureData.ApplyToMaterial(_terrainMaterial);
             _textureData.UpdateMeshHeights(_terrainMaterial, _heightMapSettings.MinHeight, _heightMapSettings.MaxHeight);
@@ -46,7 +46,7 @@ namespace LevelGenerator
             }
         }
 
-        internal void DrawTexture(Texture2D texture)
+        public void DrawTexture(Texture2D texture)
         {
             _textureRender.sharedMaterial.mainTexture = texture;
             _textureRender.transform.localScale = new Vector3(texture.width, 1, texture.height) / 10f;

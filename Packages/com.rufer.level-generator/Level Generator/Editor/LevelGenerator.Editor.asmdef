@@ -1,0 +1,18 @@
+{
+    "name": "LevelGenerator.Edotor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f47832e17a9165049a79717a890d9a18"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

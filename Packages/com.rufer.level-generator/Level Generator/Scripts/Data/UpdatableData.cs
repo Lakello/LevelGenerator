@@ -2,10 +2,10 @@
 
 namespace LevelGenerator.Data
 {
-    internal class UpdatableData : ScriptableObject
+    public class UpdatableData : ScriptableObject
     {
-        internal event System.Action OnValuesUpdated;
-        internal bool autoUpdate;
+        public event System.Action OnValuesUpdated;
+        public bool autoUpdate;
 
 #if UNITY_EDITOR
         protected virtual void OnValidate()
@@ -16,7 +16,7 @@ namespace LevelGenerator.Data
             }
         }
 
-        internal void NotifyOfUpdatedValues()
+        public void NotifyOfUpdatedValues()
         {
             UnityEditor.EditorApplication.update -= NotifyOfUpdatedValues;
             if (OnValuesUpdated != null)
