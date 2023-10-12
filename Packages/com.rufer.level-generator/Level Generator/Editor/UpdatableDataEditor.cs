@@ -9,15 +9,22 @@ namespace LevelGenerator.UnityTool
     {
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
-
-            UpdatableData data = (UpdatableData)target;
+            if (DrawDefaultInspector())
+                Update();
 
             if (GUILayout.Button("Update"))
             {
-                data.NotifyOfUpdatedValues();
+                Update();
                 EditorUtility.SetDirty(target);
             }
+        }
+
+        private void Update()
+        {
+            UpdatableData data = (UpdatableData)target;
+
+            foreach (var updatedCallBack in data.Previews)
+                updatedCallBack();
         }
     }
 }

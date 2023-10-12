@@ -19,11 +19,8 @@ namespace LevelGenerator.Data
         internal float MaxHeight => _heightMultiplier * _heightCurve.Evaluate(1);
 
 #if UNITY_EDITOR
-        protected override void OnValidate()
-        {
+        private void OnValidate() =>
             _noiseSettings.ValidateValues();
-            base.OnValidate();
-        }
 #endif
     }
 }

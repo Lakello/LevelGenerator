@@ -24,7 +24,7 @@ namespace LevelGenerator
         
         public bool AutoUpdate => _autoUpdate;
 
-        public enum DrawMode { NoiseMap, Mesh, FalloffMap };
+        internal enum DrawMode { NoiseMap, Mesh, FalloffMap };
 
         public void DrawMapInEditor()
         {
@@ -46,7 +46,7 @@ namespace LevelGenerator
             }
         }
 
-        public void DrawTexture(Texture2D texture)
+        private void DrawTexture(Texture2D texture)
         {
             _textureRender.sharedMaterial.mainTexture = texture;
             _textureRender.transform.localScale = new Vector3(texture.width, 1, texture.height) / 10f;
@@ -55,7 +55,7 @@ namespace LevelGenerator
             _meshFilter.gameObject.SetActive(false);
         }
 
-        internal void DrawMesh(MeshData meshData)
+        private void DrawMesh(MeshData meshData)
         {
             _meshFilter.sharedMesh = meshData.CreateMesh();
 
@@ -63,34 +63,25 @@ namespace LevelGenerator
             _meshFilter.gameObject.SetActive(true);
         }
 
-        private void OnValuesUpdated()
+#if UNITY_EDITOR
+        private void OnTextureValuesUpdated()
         {
-            if (!Application.isPlaying)
-            {
-                DrawMapInEditor();
-            }
+            if (_autoUpdate)
+                _textureData.ApplyToMaterial(_terrainMaterial);
         }
 
-        private void OnTextureValuesUpdated() =>
-            _textureData.ApplyToMaterial(_terrainMaterial);
+        private void OnValuesUpdated()
+        {
+            if (_autoUpdate)
+                DrawMapInEditor();
+        }
 
         private void OnValidate()
         {
-            if (_meshSettings != null)
-            {
-                _meshSettings.OnValuesUpdated -= OnValuesUpdated;
-                _meshSettings.OnValuesUpdated += OnValuesUpdated;
-            }
-            if (_heightMapSettings != null)
-            {
-                _heightMapSettings.OnValuesUpdated -= OnValuesUpdated;
-                _heightMapSettings.OnValuesUpdated += OnValuesUpdated;
-            }
-            if (_textureData != null)
-            {
-                _textureData.OnValuesUpdated -= OnTextureValuesUpdated;
-                _textureData.OnValuesUpdated += OnTextureValuesUpdated;
-            }
+            _meshSettings.AddMapPreview(OnValuesUpdated);
+            _heightMapSettings.AddMapPreview(OnValuesUpdated);
+            _textureData.AddMapPreview(OnTextureValuesUpdated);
         }
+#endif
     }
 }

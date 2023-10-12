@@ -1,29 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace LevelGenerator.Data
 {
     public class UpdatableData : ScriptableObject
     {
-        public event System.Action OnValuesUpdated;
-        public bool autoUpdate;
-
 #if UNITY_EDITOR
-        protected virtual void OnValidate()
-        {
-            if (autoUpdate)
-            {
-                UnityEditor.EditorApplication.update += NotifyOfUpdatedValues;
-            }
-        }
+        private HashSet<Action> _previews = new();
 
-        public void NotifyOfUpdatedValues()
-        {
-            UnityEditor.EditorApplication.update -= NotifyOfUpdatedValues;
-            if (OnValuesUpdated != null)
-            {
-                OnValuesUpdated();
-            }
-        }
+        public IReadOnlyCollection<Action> Previews => _previews;
+
+        public void AddMapPreview(Action valuesUpdatedCallBack) =>
+            _previews.Add(valuesUpdatedCallBack);
 #endif
     }
 }
