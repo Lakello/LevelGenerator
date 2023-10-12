@@ -16,7 +16,7 @@ MonoBehaviour:
     _normalizeMode: 1
     _scale: 50.01
     _octaves: 6
-    _persistance: 0.52
+    _persistance: 0.446
     _lacunarity: 1.7
     _seed: 0
     _offset: {x: 0, y: 0}
